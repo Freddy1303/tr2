@@ -4,7 +4,11 @@ from django.db import models
 
 class Cliente(models.Model):   
     dni = models.CharField(max_length=8)
-    nombre = models.CharField(max_length=50)
-    direccion = models.CharField(max_length=50)
-    telefono = models.IntegerField(max_length=9)
-    estado = models.BooleanField(default=True)
+    nombre = models.CharField(max_length=255)
+    direccion = models.CharField(max_length=255)
+    telefono = models.CharField(max_length=9)
+    estado = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.nombre
+
