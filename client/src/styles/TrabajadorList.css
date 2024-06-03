@@ -1,0 +1,17 @@
+.trabajador-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  .trabajador-list-table th, .trabajador-list-table td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .trabajador-list-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  

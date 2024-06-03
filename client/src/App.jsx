@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
-import { ClientePage } from './pages/ClientePage';
-import { ClienteFormPage } from './pages/ClienteFormPage';
+
+import { TrabajadorPage } from './pages/TrabajadorPage';
+import { TrabajadorFormPage } from './pages/TrabajadorFormPage';
 import {Navigation} from './components/Navigation'
 
 function App() {
@@ -8,10 +9,12 @@ function App() {
     <BrowserRouter>
       <Navigation/>
       <Routes>
-        <Route path="/" element={<Navigate to="/cliente"/>} />
-        <Route path="/cliente" element={<ClientePage/>} />  
-        <Route path="/cliente-create" element={<ClienteFormPage/>} />
-        <Route path="/cliente/:id" element={<ClienteFormPage/>} />
+        <Route path="/" element={<Navigate to="/trabajador"/>} />
+        
+        
+        <Route path="/trabajador" element={<TrabajadorPage/>} />  
+        <Route path="/trabajador-create" element={<TrabajadorFormPage/>} />
+        <Route path="/trabajador/:id" element={<TrabajadorFormPage/>} />
       </Routes>
     </BrowserRouter>
   );

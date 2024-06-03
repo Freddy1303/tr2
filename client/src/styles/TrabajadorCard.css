@@ -1,0 +1,14 @@
+.trabajador-card {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .trabajador-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .trabajador-card td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
