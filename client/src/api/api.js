@@ -1,3 +1,4 @@
+// api.js
 import axios from 'axios';
 
 const baseURL = 'http://127.0.0.1:8000/tr2/api/v1/';
@@ -6,7 +7,7 @@ const api = axios.create({
     baseURL: baseURL
 });
 
-// Log any error responses
+
 api.interceptors.response.use(
     response => response,
     error => {
@@ -24,6 +25,8 @@ export const getAllURLs = async () => {
         throw error;
     }
 };
+
+export const login = (username, password) => api.post('login/', { username, password });
 
 export const getAllCargo = () => api.get('cargos/');
 export const obtenerCargo = (id) => api.get('cargos/' + id + '/');

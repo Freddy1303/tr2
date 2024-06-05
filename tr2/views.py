@@ -1,6 +1,8 @@
+# views.py
 from rest_framework import viewsets
-from .serializer import ClienteSerializer, TrabajadorSerializer, CargoSerializer
-from .models import Cliente, Trabajador, Cargo
+from .serializer import ClienteSerializer, TrabajadorSerializer, CargoSerializer, UsuarioSerializer
+from .models import Cliente, Trabajador, Cargo, Usuario
+
 
 class ClienteView(viewsets.ModelViewSet):
     serializer_class = ClienteSerializer
@@ -13,4 +15,9 @@ class CargoView(viewsets.ModelViewSet):
 class TrabajadorView(viewsets.ModelViewSet):
     serializer_class = TrabajadorSerializer
     queryset = Trabajador.objects.all()
-    
+
+class UsuarioView(viewsets.ModelViewSet):
+    serializer_class = UsuarioSerializer
+    queryset = Usuario.objects.all()  
+      
+

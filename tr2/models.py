@@ -1,6 +1,11 @@
 from django.db import models
 
-# Create your models here.
+class Usuario(models.Model):
+    nom_usuario = models.CharField(max_length=50, unique=True)
+    contrasena = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.nom_usuario
 
 class Cliente(models.Model):   
     dni = models.CharField(max_length=8)
@@ -28,4 +33,5 @@ class Trabajador(models.Model):
 
     def __str__(self):
         return self.nombre
-
+    
+    
