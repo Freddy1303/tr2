@@ -5,20 +5,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/TrabajadorFormPage.css';
 
 export function TrabajadorFormPage() {
-    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
-    const navegar = useNavigate();
-    const params = useParams();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [cargos, setCargos] = useState([]);
-    const selectedCargo = watch("cargo"); // Obtener el valor del campo "cargo" del formulario
+    const navigate = useNavigate();
+    const params = useParams();
 
-    const onSubmit = handleSubmit(async data => {
-        if (params.id) {
-            await actualizarTrabajador(params.id, data);
-        } else {
-            await crearTrabajador(data);
+    useEffect(() => {
+        async function cargarCargos() {
+            const res = await getAllCargo();
+            setCargos(res.data);
         }
-        navegar('/trabajador');
-    });
+        cargarCargos();
+    }, []);
 
     useEffect(() => {
         async function cargarTrabajador() {
@@ -29,14 +27,31 @@ export function TrabajadorFormPage() {
                 setValue('edad', res.data.edad);
                 setValue('direccion', res.data.direccion);
                 setValue('telefono', res.data.telefono);
-                setValue('cargo', res.data.cargo.id); // Asigna el ID del cargo seleccionado
+                setValue('cargo', res.data.cargo.id);  // Asegúrate de que 'res.data.cargo.id' sea el ID del cargo
             }
-    
-            const response = await getAllCargo();
-            setCargos(response.data);
         }
         cargarTrabajador();
     }, [params.id, setValue]);
+
+    const onSubmit = handleSubmit(async data => {
+        const payload = {
+            ...data,
+            cargo: data.cargo  // Asegúrate de que 'data.cargo' sea el ID del cargo
+        };
+
+        console.log("Payload:", payload);  // Para depuración
+
+        try {
+            if (params.id) {
+                await actualizarTrabajador(params.id, payload);
+            } else {
+                await crearTrabajador(payload);
+            }
+            navigate('/trabajador');
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error.response.data);
+        }
+    });
 
     return (
         <div className="form-container">
@@ -60,27 +75,22 @@ export function TrabajadorFormPage() {
                 <label htmlFor="telefono">TELÉFONO</label>
                 <input type="text" id="telefono" placeholder="TELÉFONO" {...register("telefono", { required: true })} />
                 {errors.telefono && <span className="error-message">El TELÉFONO es necesario!!!</span>}
-    
+
                 <label htmlFor="cargo">CARGO</label>
-                <select 
-                    id="cargo" 
-                    {...register("cargo", { required: true })} 
-                    defaultValue={params.id ? selectedCargo : ""} // Establece el valor predeterminado si es una actualización
-                >
-                    <option value="">Selecciona un cargo</option>
+                <select id="cargo" {...register("cargo", { required: true })}>
                     {cargos.map(cargo => (
                         <option key={cargo.id} value={cargo.id}>{cargo.nombre}</option>
                     ))}
                 </select>
                 {errors.cargo && <span className="error-message">El CARGO es necesario!!!</span>}
-                
+
                 <button type="submit" className="submit-button">GUARDAR</button>
                 {params.id && (
                     <button type="button" className="delete-button" onClick={async () => {
                         const aceptado = window.confirm('Estas seguro?');
                         if (aceptado) {
                             await eliminarTrabajador(params.id);
-                            navegar('/trabajador');
+                            navigate('/trabajador');
                         }
                     }}>ELIMINAR</button>
                 )}

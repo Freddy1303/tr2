@@ -13,3 +13,4 @@ class CargoView(viewsets.ModelViewSet):
 class TrabajadorView(viewsets.ModelViewSet):
     serializer_class = TrabajadorSerializer
     queryset = Trabajador.objects.all()
+    

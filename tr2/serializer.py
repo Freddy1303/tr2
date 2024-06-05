@@ -1,3 +1,4 @@
+# serializer.py
 from rest_framework import serializers
 from .models import Cliente, Trabajador, Cargo
 
@@ -12,8 +13,9 @@ class CargoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TrabajadorSerializer(serializers.ModelSerializer):
-    cargo_nombre = serializers.CharField(source='cargo.nombre')  # Serialize only the cargo name
+    cargo = serializers.PrimaryKeyRelatedField(queryset=Cargo.objects.all())
+    cargo_nombre = serializers.ReadOnlyField(source='cargo.nombre') 
+    
     class Meta:
         model = Trabajador
         fields = '__all__'
-
