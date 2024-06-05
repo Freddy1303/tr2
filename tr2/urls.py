@@ -9,4 +9,5 @@ router.register('cargos', views.CargoView, 'cargos')
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),
+    path("api/v1/login/", views.login_view, name='login'),
 ]

@@ -1,42 +1,63 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { crearTrabajador, eliminarTrabajador, actualizarTrabajador, obtenerTrabajador, getAllCargo } from '../api/api';
+
+import { crearTrabajador, actualizarTrabajador, eliminarTrabajador, obtenerTrabajador, getAllCargo, getAllTrabajador } from '../api/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/TrabajadorFormPage.css';
+
 
 export function TrabajadorFormPage() {
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
     const navegar = useNavigate();
     const params = useParams();
     const [cargos, setCargos] = useState([]);
-    const selectedCargo = watch("cargo"); // Obtener el valor del campo "cargo" del formulario
+    const selectedCargo = watch("cargo");
 
     const onSubmit = handleSubmit(async data => {
-        if (params.id) {
-            await actualizarTrabajador(params.id, data);
-        } else {
-            await crearTrabajador(data);
+        try {
+            if (params.id) {
+                await actualizarTrabajador(params.id, data);
+            } else {
+                await crearTrabajador(data);
+            }
+            navegar('/trabajador');
+        } catch (error) {
+            console.error('Error al enviar la solicitud:', error);
         }
-        navegar('/trabajador');
     });
 
     useEffect(() => {
         async function cargarTrabajador() {
-            if (params.id) {
-                const res = await obtenerTrabajador(params.id);
-                setValue('dni', res.data.dni);
-                setValue('nombre', res.data.nombre);
-                setValue('edad', res.data.edad);
-                setValue('direccion', res.data.direccion);
-                setValue('telefono', res.data.telefono);
-                setValue('cargo', res.data.cargo.id); // Asigna el ID del cargo seleccionado
+            try {
+                if (params.id) {
+                    const res = await obtenerTrabajador(params.id);
+                    setValue('dni', res.data.dni);
+                    setValue('nombre', res.data.nombre);
+                    setValue('edad', res.data.edad);
+                    setValue('direccion', res.data.direccion);
+                    setValue('telefono', res.data.telefono);
+                    setValue('cargo', res.data.cargo.id);
+                }
+        
+                const response = await getAllCargo();
+                console.log("Cargos cargados:", response.data); // Agregar este console.log
+                setCargos(response.data);
+            } catch (error) {
+                console.error('Error al cargar los datos del trabajador:', error);
             }
-    
-            const response = await getAllCargo();
-            setCargos(response.data);
         }
         cargarTrabajador();
-    }, [params.id, setValue]);
+    }, [params.id, setValue]);  
+
+    const renderCargos = () => {
+        if (cargos && cargos.length > 0) {
+            return cargos.map(cargo => (
+                <option key={cargo.id} value={cargo.id}>{cargo.nombre}</option>
+            ));
+        } else {
+            return <option value="">No hay cargos disponibles</option>;
+        }
+    };
 
     return (
         <div className="form-container">
@@ -65,17 +86,14 @@ export function TrabajadorFormPage() {
                 <select 
                     id="cargo" 
                     {...register("cargo", { required: true })} 
-                    defaultValue={params.id ? selectedCargo : ""} // Establece el valor predeterminado si es una actualización
+                    defaultValue={params.id ? selectedCargo : ""}
                 >
-                    <option value="">Selecciona un cargo</option>
-                    {cargos.map(cargo => (
-                        <option key={cargo.id} value={cargo.id}>{cargo.nombre}</option>
-                    ))}
+                    {renderCargos()}
                 </select>
                 {errors.cargo && <span className="error-message">El CARGO es necesario!!!</span>}
                 
                 <button type="submit" className="submit-button">GUARDAR</button>
-                {params.id && (
+                {params.id && ( 
                     <button type="button" className="delete-button" onClick={async () => {
                         const aceptado = window.confirm('Estas seguro?');
                         if (aceptado) {

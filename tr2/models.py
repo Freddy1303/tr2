@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -29,3 +30,9 @@ class Trabajador(models.Model):
     def __str__(self):
         return self.nombre
 
+class Usuario(models.Model):
+    usuario = models.CharField(max_length=150, unique=True)
+    contraseña = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.usuario
