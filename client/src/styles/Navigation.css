@@ -1,0 +1,27 @@
+/* Navigation.css */
+
+.navigation-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+
+  }
+  
+  .navigation-title {
+    margin: 0;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navigation-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navigation-links a {
+    color: white;
+    text-decoration: none;
+  }
+  

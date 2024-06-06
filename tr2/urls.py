@@ -11,6 +11,6 @@ router.register('usuarios', views.UsuarioView, 'usuarios')
 
 
 urlpatterns = [
-
     path("api/v1/", include(router.urls)),
+    path("api/v1/login/", views.LoginView.as_view()),  # Registro de la vista LoginView como una ruta normal
 ]

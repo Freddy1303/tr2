@@ -26,7 +26,20 @@ export const getAllURLs = async () => {
     }
 };
 
-export const login = (username, password) => api.post('login/', { username, password });
+export const login = async (username, password) => {
+    try {
+      const response = await api.post('login/', { username, password });
+      return { data: { token: response.data.token } };
+    } catch (error) {
+      if (error.response && error.response.status === 500) {
+        console.error('Internal Server Error:', error.response.data);
+        return { error: 'Internal Server Error' };
+      } else {
+        console.error('Error:', error);
+        return { error: 'Unknown error' };
+      }
+    }
+  }
 
 export const getAllCargo = () => api.get('cargos/');
 export const obtenerCargo = (id) => api.get('cargos/' + id + '/');

@@ -23,4 +23,4 @@ class TrabajadorSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = '__all__'
+        fields = ['nom_usuario', 'contrasena']

@@ -30,6 +30,7 @@ class Trabajador(models.Model):
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(max_length=9)
     cargo = models.ForeignKey(Cargo, on_delete=models.CASCADE)
+    estado = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombre

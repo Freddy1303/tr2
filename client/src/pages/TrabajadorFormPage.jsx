@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/TrabajadorFormPage.css';
 
 export function TrabajadorFormPage() {
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
     const [cargos, setCargos] = useState([]);
     const navigate = useNavigate();
     const params = useParams();
@@ -28,6 +28,7 @@ export function TrabajadorFormPage() {
                 setValue('direccion', res.data.direccion);
                 setValue('telefono', res.data.telefono);
                 setValue('cargo', res.data.cargo.id);  // Asegúrate de que 'res.data.cargo.id' sea el ID del cargo
+                setValue('estado', res.data.estado);
             }
         }
         cargarTrabajador();
@@ -83,6 +84,15 @@ export function TrabajadorFormPage() {
                     ))}
                 </select>
                 {errors.cargo && <span className="error-message">El CARGO es necesario!!!</span>}
+                
+                <label htmlFor="estado">ESTADO</label>
+                <input
+                type="checkbox"
+                id="estado"
+                checked={watch("estado")}
+                {...register("estado")}
+                />
+                {errors.telefono && <span className="error-message">El ESTADO es necesario!!!</span>}
 
                 <button type="submit" className="submit-button">GUARDAR</button>
                 {params.id && (

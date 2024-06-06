@@ -1,23 +1,40 @@
 import { useState } from 'react';
-import { login } from '../api/api'; 
+import { login } from '../api/api';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navegar = useNavigate();
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      setError('Por favor, ingrese un usuario y contraseña válidos');
+      return;
+    }
+  
+    setLoading(true);
     try {
       const response = await login(username, password);
-      const token = response.data.token;
-      // Almacena el token en el almacenamiento local
-      localStorage.setItem('token', token);
-      // Redirige a la página principal
-      window.location.href = '/trabajador'; // Redirige a la ruta principal de tu aplicación
+      console.log('Response from login:', response); // Agregar este registro para verificar la respuesta
+      if (response && response.data && response.data.token) {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        navegar('/trabajador');
+      } else {
+        setError('Error de inicio de sesión: respuesta inválida');
+      }
     } catch (error) {
+      console.error('Error en el inicio de sesión:', error);
       setError('Error de inicio de sesión: ' + error.response.data.error);
+    } finally {
+      setLoading(false);
     }
   };
+  
+
 
   return (
     <div>
@@ -35,8 +52,7 @@ export function LoginPage() {
       />
       <button onClick={handleLogin}>Iniciar sesión</button>
       {error && <p>{error}</p>}
+      {loading && <p>Cargando...</p>}
     </div>
   );
 }
-
-

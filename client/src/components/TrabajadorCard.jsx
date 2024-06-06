@@ -12,6 +12,7 @@ export function TrabajadorCard({ trabajador }) {
       <td>{trabajador.direccion}</td>
       <td>{trabajador.telefono}</td>
       <td>{trabajador.cargo_nombre}</td> 
+      <td>{trabajador.estado ? 'Activo' : 'Inactivo'}</td> 
     </tr>
   );
 }
