@@ -58,7 +58,7 @@ export function TrabajadorFormPage() {
         <div className="form-container">
             <form onSubmit={onSubmit} className="trabajador-form">
                 <label htmlFor="dni">DNI</label>
-                <input type="text" id="dni" placeholder="DNI" {...register("dni", { required: true })} />
+                <input type="number" id="dni" placeholder="DNI" {...register("dni", { required: true })} />
                 {errors.dni && <span className="error-message">El DNI es necesario!!!</span>}
 
                 <label htmlFor="nombre">NOMBRE</label>
@@ -74,7 +74,7 @@ export function TrabajadorFormPage() {
                 {errors.direccion && <span className="error-message">La DIRECCIÓN es necesaria!!!</span>}
 
                 <label htmlFor="telefono">TELÉFONO</label>
-                <input type="text" id="telefono" placeholder="TELÉFONO" {...register("telefono", { required: true })} />
+                <input type="number" id="telefono" placeholder="TELÉFONO" {...register("telefono", { required: true })} />
                 {errors.telefono && <span className="error-message">El TELÉFONO es necesario!!!</span>}
 
                 <label htmlFor="cargo">CARGO</label>

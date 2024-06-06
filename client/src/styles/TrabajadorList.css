@@ -1,17 +1,76 @@
+.trabajador-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trabajador-list-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.filtros-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filtros-container .filtro-activo,
+.filtros-container .filtro-inactivo {
+  margin: 0 10px;
+}
+
+.filtros-container label {
+  margin-left: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #555;
+}
+
 .trabajador-list-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-  }
-  
-  .trabajador-list-table th, .trabajador-list-table td {
-    padding: 15px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .trabajador-list-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.trabajador-list-table th, 
+.trabajador-list-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.trabajador-list-table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.trabajador-list-table tbody tr:nth-child(even) {
+  background-color: #f4f4f4;
+}
+
+.trabajador-list-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.trabajador-list-table td {
+  transition: background-color 0.3s;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 20px;
+}
